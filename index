@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFH4X-V141</title>
+<style>
+body {
+  margin: 0;
+  background: #101018;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+}
+header {
+  background: #a00020;
+  padding: 25px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.card {
+  background: #222230;
+  margin: 18px;
+  padding: 20px;
+  border-radius: 15px;
+}
+button {
+  background: #e00030;
+  color: white;
+  border: 0;
+  padding: 13px 25px;
+  border-radius: 9px;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+<header>FFH4X-V141 🎮</header>
+<div class="card">
+<h2>Welcome Gamer!</h2>
+<p>Free Fire Tournament App</p>
+<button onclick="alert('Welcome to FFH4X-V141!')">
+Get Started
+</button>
+</div>
+<div class="card">
+<h3>🏆 Tournaments</h3>
+<p>Join upcoming tournaments</p>
+</div>
+<div class="card">
+<h3>👤 Player Registration</h3>
+<p>Register for tournaments</p>
+</div>
+<div class="card">
+<h3>📋 My Matches</h3>
+<p>Check your match details</p>
+</div>
+</body>
+</html>
