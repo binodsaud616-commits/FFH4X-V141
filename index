@@ -1,59 +1,163 @@
+
 <!DOCTYPE html>
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FFH4X-V141</title>
+<title>FFH4X-V141 Tournament</title>
 <style>
-body {
-  margin: 0;
-  background: #101018;
-  color: white;
-  font-family: Arial;
-  text-align: center;
-}
-header {
-  background: #a00020;
-  padding: 25px;
-  font-size: 25px;
-  font-weight: bold;
-}
-.card {
-  background: #222230;
-  margin: 18px;
-  padding: 20px;
-  border-radius: 15px;
-}
-button {
-  background: #e00030;
-  color: white;
-  border: 0;
-  padding: 13px 25px;
-  border-radius: 9px;
-  font-size: 16px;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
+header{background:#b00020;padding:22px 12px;text-align:center}
+header h1{margin:0;font-size:27px}
+header p{margin:7px 0 0;color:#ffe0e0}
+nav{display:flex;justify-content:center;gap:8px;padding:12px;flex-wrap:wrap;background:#171717}
+nav button,.btn{background:#d00028;color:white;border:0;padding:11px 15px;border-radius:8px;font-weight:bold}
+main{max-width:650px;margin:auto;padding:15px}
+.card{background:#1b1b1b;border:1px solid #383838;border-radius:13px;padding:17px;margin:15px 0}
+h2{color:#ff334f}
+input{width:100%;padding:13px;margin:8px 0;background:#292929;border:1px solid #555;border-radius:8px;color:white}
+button{cursor:pointer}
+.small{color:#bbb;font-size:13px}
+.hidden{display:none}
+footer{text-align:center;color:#888;padding:25px}
 </style>
 </head>
 <body>
-<header>FFH4X-V141 🎮</header>
+
+<header>
+<h1>🔥 FFH4X-V141 🔥</h1>
+<p>FREE FIRE TOURNAMENT ARENA</p>
+</header>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('register')">Register</button>
+<button onclick="showPage('tournaments')">Tournaments</button>
+<button onclick="showPage('matches')">My Matches</button>
+</nav>
+
+<main>
+<section id="home">
 <div class="card">
-<h2>Welcome Gamer!</h2>
-<p>Free Fire Tournament App</p>
-<button onclick="alert('Welcome to FFH4X-V141!')">
-Get Started
-</button>
+<h2>Welcome Gamer! 🎮</h2>
+<p>Welcome to FFH4X-V141 Tournament Arena.</p>
+<button class="btn" onclick="showPage('register')">Get Started</button>
 </div>
 <div class="card">
-<h3>🏆 Tournaments</h3>
-<p>Join upcoming tournaments</p>
+<h2>🏆 Tournaments</h2>
+<p>Join upcoming Free Fire tournaments.</p>
+<button class="btn" onclick="showPage('tournaments')">View Tournaments</button>
 </div>
 <div class="card">
-<h3>👤 Player Registration</h3>
-<p>Register for tournaments</p>
+<h2>👤 Player Registration</h2>
+<p>Register your player profile.</p>
+<button class="btn" onclick="showPage('register')">Register Now</button>
+</div>
+</section>
+
+<section id="register" class="hidden">
+<div class="card">
+<h2>👤 Player Registration</h2>
+<form id="registerForm">
+<input id="playerName" placeholder="Your Nickname" required maxlength="30">
+<input id="playerUID" placeholder="Free Fire UID" required maxlength="20">
+<button class="btn" type="submit">Save Registration</button>
+</form>
+<p id="registerMessage" class="small"></p>
+</div>
+</section>
+
+<section id="tournaments" class="hidden">
+<h2>🏆 Available Tournaments</h2>
+<div class="card">
+<h3>🔥 Solo Battle</h3>
+<p>Mode: Solo</p>
+<p>Entry: Free</p>
+<p class="small">Demo tournament</p>
+<button class="btn" onclick="joinTournament('Solo Battle')">Join Now</button>
 </div>
 <div class="card">
-<h3>📋 My Matches</h3>
-<p>Check your match details</p>
+<h3>⚔️ Clash Squad</h3>
+<p>Mode: Clash Squad</p>
+<p>Entry: Free</p>
+<p class="small">Demo tournament</p>
+<button class="btn" onclick="joinTournament('Clash Squad')">Join Now</button>
 </div>
+<div class="card">
+<h3>👑 Battle Royale</h3>
+<p>Mode: Battle Royale</p>
+<p>Entry: Free</p>
+<p class="small">Demo tournament</p>
+<button class="btn" onclick="joinTournament('Battle Royale')">Join Now</button>
+</div>
+</section>
+
+<section id="matches" class="hidden">
+<div class="card">
+<h2>🎮 My Matches</h2>
+<div id="matchList">You have not joined any tournament yet.</div>
+</div>
+</section>
+</main>
+
+<footer>FFH4X-V141 © 2026 | Gaming Community</footer>
+
+<script>
+function getData(key){
+try{return JSON.parse(localStorage.getItem(key))}catch(e){return null}
+}
+function showPage(page){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(page).classList.remove('hidden');
+if(page==='matches')loadMatches();
+}
+document.getElementById('registerForm').addEventListener('submit',function(e){
+e.preventDefault();
+const player={
+name:document.getElementById('playerName').value.trim(),
+uid:document.getElementById('playerUID').value.trim()
+};
+localStorage.setItem('ffh4x_player',JSON.stringify(player));
+document.getElementById('registerMessage').textContent='Registration saved successfully!';
+});
+function joinTournament(name){
+const player=getData('ffh4x_player');
+if(!player || !player.name || !player.uid){
+alert('Please register your player profile first!');
+showPage('register');
+return;
+}
+let matches=getData('ffh4x_matches')||[];
+if(matches.some(m=>m.name===name)){
+alert('You have already joined this tournament!');
+return;
+}
+matches.push({name:name,player:player.name,uid:player.uid});
+localStorage.setItem('ffh4x_matches',JSON.stringify(matches));
+alert('Tournament joined successfully!');
+}
+function loadMatches(){
+const matches=getData('ffh4x_matches')||[];
+const box=document.getElementById('matchList');
+if(matches.length===0){
+box.textContent='You have not joined any tournament yet.';
+return;
+}
+box.innerHTML='';
+matches.forEach(m=>{
+const card=document.createElement('div');
+card.className='card';
+const title=document.createElement('h3');
+title.textContent='🏆 '+m.name;
+const player=document.createElement('p');
+player.textContent='Player: '+m.player;
+const uid=document.createElement('p');
+uid.textContent='UID: '+m.uid;
+card.append(title,player,uid);
+box.appendChild(card);
+});
+}
+</script>
 </body>
 </html>
