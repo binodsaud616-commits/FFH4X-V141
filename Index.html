@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFH4X-V141 Tournament</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
+header{background:#b00020;padding:22px;text-align:center}
+header h1{margin:0;font-size:27px}
+header p{margin:7px 0 0}
+.container{padding:16px;max-width:600px;margin:auto}
+.card{background:#202020;padding:17px;border-radius:12px;margin:15px 0;border:1px solid #444}
+h2{color:#ff334f}
+input{width:100%;padding:13px;margin:7px 0;background:#333;color:white;border:1px solid #666;border-radius:7px}
+button{background:#e0002b;color:white;border:0;padding:12px 18px;border-radius:7px;font-weight:bold;cursor:pointer}
+button:hover{background:#ff3152}
+.small{color:#bbb;font-size:13px}
+footer{text-align:center;color:#999;padding:20px}
+</style>
+</head>
+<body>
+<header>
+<h1>FFH4X-V141</h1>
+<p>FREE FIRE TOURNAMENT</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Welcome Player!</h2>
+<p>Join tournaments and enjoy the battle.</p>
+<p class="small">Register your player details to continue.</p>
+</div>
+
+<div class="card">
+<h2>Player Registration</h2>
+<input id="nickname" placeholder="Free Fire Nickname">
+<input id="uid" placeholder="Free Fire UID">
+<button onclick="register()">Register Now</button>
+<p id="registerMsg"></p>
+</div>
+
+<div class="card">
+<h2>Available Tournaments</h2>
+<div class="card">
+<h3>Solo Battle</h3>
+<p>Mode: 1 vs 1</p>
+<button onclick="join('Solo Battle')">Join Now</button>
+</div>
+<div class="card">
+<h3>Clash Squad</h3>
+<p>Mode: Squad</p>
+<button onclick="join('Clash Squad')">Join Now</button>
+</div>
+<div class="card">
+<h3>Battle Royale</h3>
+<p>Mode: Battle Royale</p>
+<button onclick="join('Battle Royale')">Join Now</button>
+</div>
+</div>
+
+<div class="card">
+<h2>My Matches</h2>
+<div id="matches">No matches joined yet.</div>
+</div>
+
+</div>
+
+<footer>
+FFH4X-V141 © 2026
+<p>Official Tournament Website</p>
+</footer>
+
+<script>
+function register(){
+ const nickname=document.getElementById("nickname").value.trim();
+ const uid=document.getElementById("uid").value.trim();
+ if(!nickname||!uid){
+  document.getElementById("registerMsg").innerText="Enter nickname and UID first!";
+  return;
+ }
+ localStorage.setItem("player",JSON.stringify({nickname,uid}));
+ document.getElementById("registerMsg").innerText="Registration saved!";
+}
+function join(name){
+ const player=JSON.parse(localStorage.getItem("player")||"null");
+ if(!player){
+  alert("Please register first!");
+  return;
+ }
+ let matches=JSON.parse(localStorage.getItem("matches")||"[]");
+ if(matches.includes(name)){
+  alert("You already joined this tournament!");
+  return;
+ }
+ matches.push(name);
+ localStorage.setItem("matches",JSON.stringify(matches));
+ showMatches();
+ alert("Tournament joined successfully!");
+}
+function showMatches(){
+ const matches=JSON.parse(localStorage.getItem("matches")||"[]");
+ document.getElementById("matches").innerHTML=
+ matches.length?matches.map(m=>"<p>✅ "+m+"</p>").join(""):"No matches joined yet.";
+}
+showMatches();
+</script>
+</body>
+  </html>
+  
